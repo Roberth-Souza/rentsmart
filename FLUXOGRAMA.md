@@ -7,7 +7,7 @@
 
 ```mermaid
 flowchart TD
-    INI([Início]) --> TIPO[["Ler tipo de imóvel<br/>apartamento / casa / estúdio"]]
+    INI([Início]) --> TIPO[["Ler tipo de imóvel (menu)<br/>1 casa · 2 apartamento · 3 estúdio"]]
     TIPO --> QUAL{"Tipo?"}
 
     QUAL -->|apartamento| AQ[["Ler nº de quartos (1 ou 2)"]]
