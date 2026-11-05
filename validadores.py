@@ -1,6 +1,6 @@
 """Conjunto de validadores de entrada do RentSmart"""
 
-SIM_NAO = {"s": {"s", "sim"}, "n": {"n", "nao", "não"}}
+SIM_NAO = {True: {"s", "sim"}, False: {"n", "nao", "não"}}
 # TODO: Quando o imoveis.py existir, adaptar isso para a versão real
 TESTE = {"1": "casa", "2": "apartamento", "3": "estúdio"}
 
@@ -27,7 +27,7 @@ def validar_inteiro(resposta: str, minimo: int, maximo: int | None) -> int:
     return resposta_inteira
 
 
-def validar_sim_nao(resposta: str) -> str:
+def validar_sim_nao(resposta: str) -> bool:
     """Valida se o parâmetro resposta está entre o conjunto de respostas válidas
     de sim ou não"""
     resposta_parseada = resposta.strip().lower()
