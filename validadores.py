@@ -1,8 +1,9 @@
 """Conjunto de validadores de entrada do RentSmart"""
 
+from imoveis import Apartamento, Casa, Estudio
+
 SIM_NAO = {True: {"s", "sim"}, False: {"n", "nao", "não"}}
-# TODO: Quando o imoveis.py existir, adaptar isso para a versão real
-TESTE = {"1": "casa", "2": "apartamento", "3": "estúdio"}
+OPCOES_TIPO = {"1": Casa, "2": Apartamento, "3": Estudio}
 
 
 def validar_inteiro(resposta: str, minimo: int, maximo: int | None) -> int:
@@ -39,11 +40,10 @@ def validar_sim_nao(resposta: str) -> bool:
     raise ValueError('Digite somente "s" ou "n"')
 
 
-def validar_imovel(resposta: str) -> str:
+def validar_imovel(resposta: str) -> type[Casa] | type[Apartamento] | type[Estudio]:
     """Valida se o parâmetro resposta está entre as opções de imóvel válidas"""
     resposta_parseada = resposta.strip().lower()
-    # TODO: Quando o imoveis.py existir, adaptar isso para a versão real
-    imovel = TESTE.get(resposta_parseada)
+    imovel = OPCOES_TIPO.get(resposta_parseada)
     if imovel is not None:
         return imovel
 
