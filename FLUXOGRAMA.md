@@ -49,7 +49,7 @@ flowchart TD
 
     PARC --> BASE
     FINAL --> TAXA
-    TAXA --> RES[/"Mostra resumo no terminal<br/>base · adicionais · desconto · aluguel final<br/>bloco separado: taxa total, N parcelas, valores"/]
+    TAXA --> RES[/"Mostra resumo no terminal<br/>base · adicionais · desconto · aluguel final<br/>bloco separado: taxa total, N parcelas, valores<br/>valor a pagar: meses 1..N com parcela, meses N+1..12"/]
 
     RES --> M1["mes = 1"]
     M1 --> MQ{"mes ≤ 12?"}
