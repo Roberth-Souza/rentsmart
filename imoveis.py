@@ -11,6 +11,7 @@ class Imovel:
     QUARTOS_MIN: ClassVar[int] = 1
     QUARTOS_MAX: ClassVar[int] = 2
     VALOR_VAGA: ClassVar[Decimal] = Decimal(300)
+    TEXTO_DESCONTO: ClassVar[str] = "Desconto"
 
     def __init__(self, quartos: int, vagas: int) -> None:
         self.quartos: int = quartos
@@ -34,15 +35,16 @@ class Imovel:
         itens.append((f"Aluguel base ({self.NOME})", self.ALUGUEL_BASE))
         quarto_adicional = self.adicional_quarto()
         if quarto_adicional:
-            itens.append(("Adicional 2° quarto", quarto_adicional))
+            itens.append(("Adicional 2º quarto", quarto_adicional))
 
         if self.vagas:
-            itens.append((f"Garagem: {self.vagas} vaga(s)", self.garagem()))
+            palavra_vaga = "vaga" if self.vagas == 1 else "vagas"
+            itens.append((f"Garagem ({self.vagas} {palavra_vaga})", self.garagem()))
 
         valor_desconto = self.desconto()
 
         if valor_desconto:
-            itens.append(("Desconto", -valor_desconto))
+            itens.append((self.TEXTO_DESCONTO, -valor_desconto))
 
         return itens
 
@@ -65,6 +67,7 @@ class Apartamento(Imovel):
     NOME: ClassVar[str] = "apartamento"
     ALUGUEL_BASE: ClassVar[Decimal] = Decimal(700)
     ADICIONAL_QUARTO: ClassVar[Decimal] = Decimal(200)
+    TEXTO_DESCONTO: ClassVar[str] = "Desconto sem crianças (5%)"
 
     def __init__(self, quartos: int, vagas: int, criancas: bool) -> None:
         super().__init__(
