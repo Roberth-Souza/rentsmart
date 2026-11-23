@@ -21,7 +21,7 @@ Dependendo do sistema, o comando pode ser `python3` (Linux/macOS) ou `py` (Windo
 ## Saída
 
 - **Terminal:** itens do aluguel (base, adicionais, desconto), aluguel mensal, taxa contratual com as parcelas e o valor a pagar em cada mês.
-- **CSV:** `projecao_12_meses.csv`, salvo na pasta do projeto (de onde quer que o comando seja rodado). Uma linha por mês com aluguel, parcela da taxa e total. Usa `;` como separador e vírgula decimal: abre direto no Excel ou LibreOffice.
+- **CSV:** `projecao_12_meses.csv`, salvo na pasta do projeto (de onde quer que o comando seja rodado). Se não der pra gravar lá (ex.: o CSV anterior aberto no Excel), salva na pasta do usuário; o programa sempre mostra o caminho. Uma linha por mês com aluguel, parcela da taxa e total. Usa `;` como separador e vírgula decimal: abre direto no Excel ou LibreOffice.
 
 ## Testes
 

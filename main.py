@@ -7,12 +7,18 @@ from pathlib import Path
 
 from entrada import ler_resposta_valida
 from imoveis import Apartamento, Casa, Estudio, Imovel
-from orcamento import TaxaContratual, montar_orcamento
+from orcamento import Orcamento, TaxaContratual, montar_orcamento
 from saida import gravar_csv, imprimir_resumo
 from validadores import OPCOES_TIPO, validar_imovel, validar_inteiro, validar_sim_nao
 
-# Sempre na pasta do projeto, independente de onde o comando foi rodado
-CAMINHO_CSV = Path(__file__).parent / "projecao_12_meses.csv"
+NOME_CSV = "projecao_12_meses.csv"
+
+# Tentados nesta ordem: pasta do projeto (independente de onde o comando foi rodado)
+# e, se falhar (ex.: CSV aberto no Excel, pasta sem permissão), a pasta do usuário
+CAMINHOS_CSV = (
+    Path(__file__).parent / NOME_CSV,
+    Path.home() / NOME_CSV,
+)
 
 
 def ler_quartos(classe: type[Imovel]) -> int:
@@ -86,6 +92,21 @@ def ler_taxa() -> TaxaContratual:
     return TaxaContratual(parcelas)
 
 
+def salvar_projecao(orcamento: Orcamento) -> Path | None:
+    """Tenta gravar o CSV em cada caminho de CAMINHOS_CSV, na ordem.
+
+    Devolve o caminho onde conseguiu gravar, ou None se nenhum funcionou.
+    gravar_csv deixa o erro subir; quem decide o que fazer é a main (CLASSES.md §5.2).
+    """
+    for caminho in CAMINHOS_CSV:
+        try:
+            gravar_csv(orcamento, caminho)
+            return caminho
+        except OSError as erro:
+            print(f"\nNão foi possível salvar em {caminho}: {erro}")
+    return None
+
+
 def main() -> None:
     print("===== RentSmart — Orçamento de locação =====\n")
     imovel = ler_imovel()
@@ -95,14 +116,12 @@ def main() -> None:
     print()
     imprimir_resumo(orcamento)
 
-    # gravar_csv deixa o erro subir; quem decide o que fazer é a main (CLASSES.md §5.2)
-    try:
-        gravar_csv(orcamento, CAMINHO_CSV)
-    except OSError as erro:
-        print(f"\nNão foi possível salvar o CSV: {erro}")
+    caminho = salvar_projecao(orcamento)
+    if caminho is None:
+        print("\nO CSV não foi salvo: nenhuma das pastas aceitou o arquivo.")
         return
 
-    print(f"\nProjeção de 12 meses salva em: {CAMINHO_CSV}")
+    print(f"\nProjeção de 12 meses salva em: {caminho}")
 
 
 if __name__ == "__main__":
